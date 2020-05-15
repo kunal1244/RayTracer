@@ -8,7 +8,7 @@ float Vertex::dot(Vertex& a, Vertex& b) {
 }
 
 Vertex Vertex::cross(Vertex& a, Vertex& b) {
-	Vertex* ret = new Vertex::Vertex(
+	Vertex* ret = new Vertex(
 		a.y * b.z - a.z * b.y, 
 		a.z * b.x - a.x * b.z,
 		a.x * b.y - a.y * b.x
@@ -17,17 +17,17 @@ Vertex Vertex::cross(Vertex& a, Vertex& b) {
 }
 
 Vertex Vertex::add(Vertex& a, Vertex& b) {
-	Vertex* ret = new Vertex::Vertex(a.x + b.x, a.y + b.y, a.z + b.z);
+	Vertex* ret = new Vertex(a.x + b.x, a.y + b.y, a.z + b.z);
 	return *ret;
 }
 
 Vertex Vertex::subtract(Vertex& a, Vertex& b) {
-	Vertex* ret = new Vertex::Vertex(a.x - b.x, a.y - b.y, a.z - b.z);
+	Vertex* ret = new Vertex(a.x - b.x, a.y - b.y, a.z - b.z);
 	return *ret;
 }
 
 Vertex Vertex::multiply(float mul, Vertex& v) {
-	Vertex* ret = new Vertex::Vertex(
+	Vertex* ret = new Vertex(
 		v.x * mul,
 		v.y * mul,
 		v.z * mul);
@@ -37,7 +37,7 @@ Vertex Vertex::divide(float val, Vertex& v) {
 	if (val == 0) {
 		val = 1.f;
 	}
-	Vertex* ret = new Vertex::Vertex(
+	Vertex* ret = new Vertex(
 		v.x / val,
 		v.y / val,
 		v.z / val);

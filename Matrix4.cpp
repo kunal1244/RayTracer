@@ -224,7 +224,7 @@ Matrix4 Matrix4::inverse(Matrix4& mat) {
 		}
 	}
 	bool inverted = invertMatrix(m, inv);
-	Matrix4* ret = new Matrix4::Matrix4();
+	Matrix4* ret = new Matrix4();
 	if (inverted) {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {

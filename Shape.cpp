@@ -64,9 +64,9 @@ bool Shape::intersectCircle(Ray& ray, float* thit, LocalGeo* local) {
 	Vertex nor = Vertex::subtract(pos, *center);
 	nor = Vertex::normalize(nor);
 
-	Vertex* posptr = new Vertex::Vertex(pos.x, pos.y, pos.z);
-	Vertex* norptr = new Vertex::Vertex(nor.x, nor.y, nor.z);
-	LocalGeo* l = new LocalGeo::LocalGeo(posptr, norptr);
+	Vertex* posptr = new Vertex(pos.x, pos.y, pos.z);
+	Vertex* norptr = new Vertex(nor.x, nor.y, nor.z);
+	LocalGeo* l = new LocalGeo(posptr, norptr);
 	*local = *l;
 	*thit = t;
 	return true;
@@ -107,8 +107,8 @@ bool Shape::intersectTriangle(Ray& ray, float* thit, LocalGeo* local) {
     if (t < 0.0 || (s + t) > 1.0)
         return false;
 
-	Vertex* pos = new Vertex::Vertex(dir_thit_plus_pos.x, dir_thit_plus_pos.y, dir_thit_plus_pos.z);
-	Vertex* n = new Vertex::Vertex(normal.x, normal.y, normal.z);
+	Vertex* pos = new Vertex(dir_thit_plus_pos.x, dir_thit_plus_pos.y, dir_thit_plus_pos.z);
+	Vertex* n = new Vertex(normal.x, normal.y, normal.z);
 	LocalGeo* l = new LocalGeo(pos, n);
 	*local = *l;
 	return true;

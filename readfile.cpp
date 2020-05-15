@@ -46,7 +46,7 @@ void rightMultiply(Matrix4& mat, stack<Matrix4>& transfstack) {
 void readfile(const char* filename, Camera* camera) {
 
   stack<Matrix4> transfstack; 
-  Matrix4* iden = new Matrix4::Matrix4(1.f);
+  Matrix4* iden = new Matrix4(1.f);
   transfstack.push(*iden);
 
   int maxverts;
@@ -82,7 +82,7 @@ void readfile(const char* filename, Camera* camera) {
             validinput = readvals(s, 6, values); // Position/color for lts.
             if (validinput) {
               Color* color = new Color(values[3], values[4], values[5]);
-              Vertex v_temp = Vertex::Vertex(values[0], values[1], values[2]);
+              Vertex v_temp = Vertex(values[0], values[1], values[2]);
               v_temp = Vertex::normalize(v_temp);
               Vertex* v = new Vertex(-v_temp.x, -v_temp.y, -v_temp.z);
               Light* light = new Light(0, v, color);
@@ -99,7 +99,7 @@ void readfile(const char* filename, Camera* camera) {
             validinput = readvals(s, 6, values);
             if (validinput) {
               Color* color = new Color(values[3], values[4], values[5]);
-              Vertex v_temp = Vertex::Vertex(values[0], values[1], values[2]);
+              Vertex v_temp = Vertex(values[0], values[1], values[2]);
               Vertex* v = new Vertex(v_temp.x, v_temp.y, v_temp.z);
               Light* light = new Light(1, v, color);
               lights[numused] = light;
@@ -118,7 +118,7 @@ void readfile(const char* filename, Camera* camera) {
         else if (cmd == "vertex") {
           validinput = readvals(s,3,values); 
           if (validinput) {
-            Vertex* temp = new Vertex::Vertex(values[0], values[1], values[2]);
+            Vertex* temp = new Vertex(values[0], values[1], values[2]);
             if (currverts < maxVertices) {
               vertices[currverts] = temp;
               currverts++;
@@ -130,23 +130,23 @@ void readfile(const char* filename, Camera* camera) {
           validinput = readvals(s,3,values); 
           if (validinput) {
             if (numprimitives < maxprimitives) {
-              Shape* shape = new Shape::Shape(vertices[(int)(values[0])], vertices[(int)(values[1])], vertices[(int)(values[2])]);
+              Shape* shape = new Shape(vertices[(int)(values[0])], vertices[(int)(values[1])], vertices[(int)(values[2])]);
               
-              Color* diffuseColor = new Color::Color(diffuse[0], diffuse[1], diffuse[2]);
-              Color* specularColor = new Color::Color(specular[0], specular[1], specular[2]);
-              Color* ambientColor = new Color::Color(ambient[0], ambient[1], ambient[2]);
-              Color* emissionColor = new Color::Color(emission[0], emission[1], emission[2]);
-              BRDF* brdf = new BRDF::BRDF(diffuseColor, specularColor, ambientColor, emissionColor, shininess);
+              Color* diffuseColor = new Color(diffuse[0], diffuse[1], diffuse[2]);
+              Color* specularColor = new Color(specular[0], specular[1], specular[2]);
+              Color* ambientColor = new Color(ambient[0], ambient[1], ambient[2]);
+              Color* emissionColor = new Color(emission[0], emission[1], emission[2]);
+              BRDF* brdf = new BRDF(diffuseColor, specularColor, ambientColor, emissionColor, shininess);
               
               Matrix4 objToWorld_temp = transfstack.top();
-              Matrix4* objToWorld = new Matrix4::Matrix4(
+              Matrix4* objToWorld = new Matrix4(
                 objToWorld_temp.mat[0][0], objToWorld_temp.mat[0][1], objToWorld_temp.mat[0][2], objToWorld_temp.mat[0][3],
                 objToWorld_temp.mat[1][0], objToWorld_temp.mat[1][1], objToWorld_temp.mat[1][2], objToWorld_temp.mat[1][3],
                 objToWorld_temp.mat[2][0], objToWorld_temp.mat[2][1], objToWorld_temp.mat[2][2], objToWorld_temp.mat[2][3],
                 objToWorld_temp.mat[3][0], objToWorld_temp.mat[3][1], objToWorld_temp.mat[3][2], objToWorld_temp.mat[3][3]
                 );
               Matrix4 worldToObj_temp = Matrix4::inverse(objToWorld_temp);
-              Matrix4* worldToObj = new Matrix4::Matrix4(
+              Matrix4* worldToObj = new Matrix4(
                 worldToObj_temp.mat[0][0], worldToObj_temp.mat[0][1], worldToObj_temp.mat[0][2], worldToObj_temp.mat[0][3],
                 worldToObj_temp.mat[1][0], worldToObj_temp.mat[1][1], worldToObj_temp.mat[1][2], worldToObj_temp.mat[1][3],
                 worldToObj_temp.mat[2][0], worldToObj_temp.mat[2][1], worldToObj_temp.mat[2][2], worldToObj_temp.mat[2][3],
@@ -224,12 +224,12 @@ void readfile(const char* filename, Camera* camera) {
         } else if (cmd == "camera") {
           validinput = readvals(s,10,values);
           if (validinput) {            
-            Vertex* eye = new Vertex::Vertex(values[0], values[1], values[2]);
-            Vertex* center = new Vertex::Vertex(values[3], values[4], values[5]);
-            Vertex*  up = new Vertex::Vertex(values[6], values[7], values[8]);
+            Vertex* eye = new Vertex(values[0], values[1], values[2]);
+            Vertex* center = new Vertex(values[3], values[4], values[5]);
+            Vertex*  up = new Vertex(values[6], values[7], values[8]);
             Vertex eye_center = Vertex::subtract(*eye, *center);
             Vertex upinit = Transform::upvector(*up, eye_center);
-            up = new Vertex::Vertex(upinit.x, upinit.y, upinit.z);
+            up = new Vertex(upinit.x, upinit.y, upinit.z);
             float fovy = values[9];
 
             Vertex a = Vertex::subtract(*eye, *center);
@@ -238,11 +238,11 @@ void readfile(const char* filename, Camera* camera) {
             x = Vertex::normalize(x);
             Vertex y = Vertex::cross(z, x);
 
-            Vertex* uu = new Vertex::Vertex(x.x, x.y, x.z);
-            Vertex* vv = new Vertex::Vertex(y.x, y.y, y.z);
-            Vertex* ww = new Vertex::Vertex(z.x, z.y, z.z);
+            Vertex* uu = new Vertex(x.x, x.y, x.z);
+            Vertex* vv = new Vertex(y.x, y.y, y.z);
+            Vertex* ww = new Vertex(z.x, z.y, z.z);
 
-            Camera* c = new Camera::Camera(eye, center, up, fovy, uu, vv, ww);
+            Camera* c = new Camera(eye, center, up, fovy, uu, vv, ww);
             *camera = *c;
           }
         }
@@ -251,25 +251,25 @@ void readfile(const char* filename, Camera* camera) {
           validinput = readvals(s,4,values); 
           if (validinput) {
             if (numprimitives < maxprimitives) {
-              Vertex* center = new Vertex::Vertex(values[0], values[1], values[2]);
-              Shape* shape = new Shape::Shape(center, values[3]);
+              Vertex* center = new Vertex(values[0], values[1], values[2]);
+              Shape* shape = new Shape(center, values[3]);
               
-              Color* diffuseColor = new Color::Color(diffuse[0], diffuse[1], diffuse[2]);
-              Color* specularColor = new Color::Color(specular[0], specular[1], specular[2]);
-              Color* ambientColor = new Color::Color(ambient[0], ambient[1], ambient[2]);
-              Color* emissionColor = new Color::Color(emission[0], emission[1], emission[2]);
+              Color* diffuseColor = new Color(diffuse[0], diffuse[1], diffuse[2]);
+              Color* specularColor = new Color(specular[0], specular[1], specular[2]);
+              Color* ambientColor = new Color(ambient[0], ambient[1], ambient[2]);
+              Color* emissionColor = new Color(emission[0], emission[1], emission[2]);
               
-              BRDF* brdf = new BRDF::BRDF(diffuseColor, specularColor, ambientColor, emissionColor, shininess);
+              BRDF* brdf = new BRDF(diffuseColor, specularColor, ambientColor, emissionColor, shininess);
               
               Matrix4 objToWorld_temp = transfstack.top();
-              Matrix4* objToWorld = new Matrix4::Matrix4(
+              Matrix4* objToWorld = new Matrix4(
                 objToWorld_temp.mat[0][0], objToWorld_temp.mat[0][1], objToWorld_temp.mat[0][2], objToWorld_temp.mat[0][3],
                 objToWorld_temp.mat[1][0], objToWorld_temp.mat[1][1], objToWorld_temp.mat[1][2], objToWorld_temp.mat[1][3],
                 objToWorld_temp.mat[2][0], objToWorld_temp.mat[2][1], objToWorld_temp.mat[2][2], objToWorld_temp.mat[2][3],
                 objToWorld_temp.mat[3][0], objToWorld_temp.mat[3][1], objToWorld_temp.mat[3][2], objToWorld_temp.mat[3][3]
                 );
               Matrix4 worldToObj_temp = Matrix4::inverse(objToWorld_temp);
-              Matrix4* worldToObj = new Matrix4::Matrix4(
+              Matrix4* worldToObj = new Matrix4(
                 worldToObj_temp.mat[0][0], worldToObj_temp.mat[0][1], worldToObj_temp.mat[0][2], worldToObj_temp.mat[0][3],
                 worldToObj_temp.mat[1][0], worldToObj_temp.mat[1][1], worldToObj_temp.mat[1][2], worldToObj_temp.mat[1][3],
                 worldToObj_temp.mat[2][0], worldToObj_temp.mat[2][1], worldToObj_temp.mat[2][2], worldToObj_temp.mat[2][3],
@@ -302,7 +302,7 @@ void readfile(const char* filename, Camera* camera) {
         else if (cmd == "rotate") {
           validinput = readvals(s, 4, values);
           if (validinput) {
-            Vertex axis = Vertex::Vertex(values[0], values[1], values[2]);
+            Vertex axis = Vertex(values[0], values[1], values[2]);
             Matrix4 R = Matrix4::createRotatingMatrix(values[3], axis);
             rightMultiply(R, transfstack);
           }

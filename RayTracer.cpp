@@ -60,7 +60,7 @@ bool RayTracer::getIntersectP(Ray& ray, int numPrimitives, GeometricPrimitive* p
 }
 
 Color timesVertex(Color& color, Vertex& vertex) {
-      Color* c = new Color::Color(
+      Color* c = new Color(
             color.r * vertex.x,
             color.g * vertex.y,
             color.b * vertex.z
@@ -69,7 +69,7 @@ Color timesVertex(Color& color, Vertex& vertex) {
 }
 
 Color timesColor(Color& color, Color& vertex) {
-      Color* c = new Color::Color(
+      Color* c = new Color(
             color.r * vertex.r,
             color.g * vertex.g,
             color.b * vertex.b
@@ -78,7 +78,7 @@ Color timesColor(Color& color, Color& vertex) {
 }
 
 Color timesScalar(Color& color, float val) {
-      Color* c = new Color::Color(
+      Color* c = new Color(
             color.r * val,
             color.g * val,
             color.b * val
@@ -104,7 +104,7 @@ Color ComputeLight (Vertex& direction, Color& lightcolor, Vertex& normal, Vertex
         // printf("PHONG: %f, %f, %f.\n", phong.r, phong.g, phong.b);
         // printf("LAMBERT: %f, %f, %f.\n", lambert.r, lambert.g, lambert.b);
 
-        Color* retval = new Color::Color(
+        Color* retval = new Color(
             lambert.r + phong.r,
             lambert.g + phong.g,
             lambert.b + phong.b); 
@@ -121,15 +121,15 @@ Color shading(Ray& ray, LocalGeo& localGeo, BRDF& brdf, Ray& lray, Color& lcolor
 }
 
 Ray createReflectRay(LocalGeo& localGeo, Ray& ray) {
-      Vertex* pos = new Vertex::Vertex(localGeo.pos->x, localGeo.pos->y, localGeo.pos->z);
+      Vertex* pos = new Vertex(localGeo.pos->x, localGeo.pos->y, localGeo.pos->z);
 
-      Vertex normal = Vertex::Vertex(localGeo.normal->x, localGeo.normal->y, localGeo.normal->z);
+      Vertex normal = Vertex(localGeo.normal->x, localGeo.normal->y, localGeo.normal->z);
       float mul = 2 * Vertex::dot(*ray.dir, normal);
       Vertex ri_c = Vertex::multiply(mul, normal);
       Vertex ri = Vertex::subtract(*ray.dir, ri_c);
       ri = Vertex::normalize(ri);
-      Vertex* dir = new Vertex::Vertex(ri.x, ri.y, ri.z);
-      Ray* new_ray = new Ray::Ray(pos, dir, ray.t_min, ray.t_max);
+      Vertex* dir = new Vertex(ri.x, ri.y, ri.z);
+      Ray* new_ray = new Ray(pos, dir, ray.t_min, ray.t_max);
       return *new_ray;
 }
 
@@ -146,7 +146,7 @@ void RayTracer::trace(
       ) {
 
       if (depth > maxdepth) {
-            Color ret = Color::Color(0.f, 0.f, 0.f);
+            Color ret = Color(0.f, 0.f, 0.f);
             setColor(color, ret);
             return;
       }
@@ -156,13 +156,13 @@ void RayTracer::trace(
       BRDF brdf;
       int primitiveIndex;
       if (!getIntersect(ray, &thit, &localGeo, &primitive, numPrimitives, primitives, &primitiveIndex)) {
-            Color ret = Color::Color(0.f, 0.f, 0.f);
+            Color ret = Color(0.f, 0.f, 0.f);
             setColor(color, ret);
             return;
       }
       // Obtain the brdf at intersection point
       primitive.getBRDF(localGeo, &brdf);
-      Color ret = Color::Color(0.f,0.f,0.f);
+      Color ret = Color(0.f,0.f,0.f);
       setColor(color, ret);
 
       // There is an intersection, loop through all light source

@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
   const float pi = 3.14159265 ;
   float fovx = 2 * atan( tan(camera.fovy * pi/180/2.f) * ((float) w) / ((float) h) ) * 180/pi;
 
-  Film film = Film::Film(w, h);
+  Film film = Film(w, h);
   while (Sample::getSample(&sample, w, h)) {
       if (sample.x % 700 == 0) printf("Sample: %d, %d\n", sample.x, sample.y);
       if (sample.y < 200) continue;

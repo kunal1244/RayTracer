@@ -32,8 +32,8 @@ void Camera::generateRay(Sample& sample, Ray* ray, int width, int height, float 
 
 	float tmin = sqrt(pow(total.x, 2) + pow(total.y, 2) + pow(total.z, 2));
 	total = Vertex::normalize(total);
-	Vertex* dir = new Vertex::Vertex(total.x, total.y, total.z);
-	Vertex* pos = new Vertex::Vertex(eye->x, eye->y, eye->z);
-	Ray* r = new Ray::Ray(pos, dir, 0.1f, 100.f);
+	Vertex* dir = new Vertex(total.x, total.y, total.z);
+	Vertex* pos = new Vertex(eye->x, eye->y, eye->z);
+	Ray* r = new Ray(pos, dir, 0.1f, 100.f);
 	*ray = *r;
 }

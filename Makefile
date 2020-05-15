@@ -27,11 +27,11 @@ GeometricPrimitive.o: GeometricPrimitive.cpp GeometricPrimitive.h Shape.o BRDF.o
 	$(CC) $(CFLAGS) $(INCFLAGS) -c GeometricPrimitive.cpp
 Light.o: Light.cpp Light.h Vertex.o Color.o
 	$(CC) $(CFLAGS) $(INCFLAGS) -c Light.cpp
-Film.o: Film.cpp Film.h Sample.o Color.o Variables.h
+Film.o: Film.cpp Film.h Sample.o Color.o variables.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c Film.cpp
 Camera.o: Camera.cpp Camera.h Sample.o Vertex.o
 	$(CC) $(CFLAGS) $(INCFLAGS) -c Camera.cpp
-Sample.o: Sample.cpp Sample.h Variables.h
+Sample.o: Sample.cpp Sample.h variables.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c Sample.cpp
 Transform.o: Transform.cpp Transform.h Matrix4.h Vertex.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c Transform.cpp
